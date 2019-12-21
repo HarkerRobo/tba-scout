@@ -1,4 +1,7 @@
-function makeRequest(method, url, parameters, callback) {
+// This is just a read key, so feel free to steal if you want /shrug
+const TBA_AUTH_KEY ="gqzZstbSv3xodFnk8qAjX1ADDxcuz9HJogftSNsFyPgCfOHKYBuBiW4r1ImigRNA"
+
+function makeTBARequest(method, url, parameters, callback) {
    let xhr = new XMLHttpRequest();
 
    xhr.onreadystatechange = () => {

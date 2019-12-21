@@ -4,11 +4,10 @@
   "description": "TBA, but with some added features to help in scouting",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "echo \"deploying\""
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "dotenv": "^8.2.0"
-  }
+  "dependencies": {}
 }
