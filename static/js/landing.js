@@ -12,14 +12,26 @@ new Vue({
       fetchingTeamsAndEvents: true,
       matchingTeams: [],      // teams matching the search
       matchingEvents: [],     // events matching the search
-      searchIsLoading: true,  // if the search is loading
-      searchText: ""
+      searchText: "",
+      showSearchResults: false,
+      searchresultsText: {
+         teams: {
+            show: false,
+            text: ""
+         },
+         events: {
+            show: false,
+            text: ""
+         }
+      }
    },
    created: function() {
+      this.showSearchresultsTexts("Loading...");
       // fetch teams and events
       // set values, set fetchingTeamsAndEvents to false
 
       // filter events to remove duplicates?
+      this.clearSearchresultsTexts();
    },
    methods: {
       linkTo: function (newLink, openInNewTab) {
@@ -33,12 +45,18 @@ new Vue({
             window.location.href = newLink;
          }
       },
+      toggleSearchResults: function(turnOn) {
+         this.showSearchResults = turnOn;
+      },
       search: function() { // filters teams/events according to search input
-         this.searchIsLoading = true;
+         this.showSearchresultsTexts("Loading...");
          for(let i=0;i<numTeams; i++) {
-            
+
          }
-         this.searchIsLoading = false;
+         for(let i=0;i<numEvents;i++) {
+
+         }
+         this.clearSearchresultsTexts();
       },
       clearSearch: function() {
          this.matchingTeams = [];
@@ -49,6 +67,18 @@ new Vue({
       },
       eventMatch: function(eventName, eventID) {
 
+      },
+      showSearchresultsTexts: function(text) {
+         this.searchresultsText.teams.text = text;
+         this.searchresultsText.events.text = text;
+         this.searchresultsText.teams.show = true;
+         this.searchresultsText.events.show = true;
+      },
+      clearSearchresultsTexts: function() {
+         this.searchresultsText.teams.show = false;
+         this.searchresultsText.events.show = false;
+         this.searchresultsText.teams.text = "";
+         this.searchresultsText.events.text = "";
       }
    }
 });

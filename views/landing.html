@@ -21,8 +21,10 @@
       <navbar></navbar>
       <div class="content-container">
          <div class="search">
-            <input type="text" class="searchbar" placeholder="Start typing to search for a specific team or event">
-            <div class="searchresults">
+
+            <input type="text" class="searchbar" placeholder="Start typing to search for a specific team or event" v-model="searchText" @click="toggleSearchResults(true)" @blur="toggleSearchResults(false)" @change="search">
+
+            <div class="searchresults" v-if="showSearchResults && searchText!=''">
                <div class="searchresultsHeader">
                   Teams
                </div>
@@ -43,8 +45,8 @@
                <!-- <div class="searchresult searchresultEvent">
                   MBA Regional (2007)
                </div> -->
-               <div class="nosearchresults">
-                  Sorry, no results were found.
+               <div class="searchresultsText" v-if="searchresultsText.events.show">
+                  {{searchresultsText.events.text}}
                </div>
             </div>
          </div>

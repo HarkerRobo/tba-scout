@@ -21,9 +21,7 @@
       font-size: 1.2vw;
       font-family: $body-text-font;
 
-      &:focus {
-         border-style: dashed;
-      }
+      outline: none;
    }
    .searchresults {
       background-color: $super-light-gray;
@@ -57,7 +55,7 @@
             box-shadow: 0 2px 10px $light-gray;
          }
       }
-      .nosearchresults {
+      .searchresultsText {
          padding: 10px 20px;
       }
    }
