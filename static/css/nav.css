@@ -1,0 +1,53 @@
+@import url("https://fonts.googleapis.com/css?family=Fira+Sans&display=swap");
+body {
+  font-family: "Fira Sans";
+}
+
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  padding: 5px;
+  background-color: #3f51b5;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row wrap;
+          flex-flow: row wrap;
+}
+
+.nav .nav-icon {
+  background-image: url("https://frcdesigns.files.wordpress.com/2017/06/android_launcher_icon_blue_512.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 50px;
+  width: 50px;
+}
+
+.nav .nav-option {
+  max-width: 100px;
+  padding: 10px;
+  border-radius: 2px;
+  text-align: center;
+  margin: auto 1vw auto 1vw;
+  background-color: #3f51b5;
+  color: #ffffff;
+  -webkit-transition: background-color .2s;
+  transition: background-color .2s;
+  cursor: pointer;
+}
+
+.nav .nav-option:hover {
+  background-color: #3445a5;
+}
+
+.nav .nav-spacer {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+}
+/*# sourceMappingURL=nav.css.map */

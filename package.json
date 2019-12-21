@@ -1,0 +1,11 @@
+{
+  "name": "tba-scout",
+  "version": "1.0.0",
+  "description": "TBA, but with some added features to help in scouting",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

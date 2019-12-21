@@ -1,0 +1,38 @@
+// colors---------------
+$tba-blue: #3f51b5;
+$tba-dark-blue: #3445a5;
+$tba-light-blue: #03a9f4;
+
+$gray: rgb(161, 161, 161);
+$light-gray: lightgray;
+$dark-gray: rgb(100, 100, 100);
+$super-light-gray: #f4f4f4;
+
+$green: #4caf50;
+
+$body-text-color: rgb(66, 66, 66);
+$header-text-color: rgb(84, 76, 104);
+$sub-text-color: lightgray;
+$emphasis-text-color: rgb(255, 208, 0);
+
+$white: #ffffff;
+$black: #000000;
+// -----------------------
+
+// fonts -----------------
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans&display=swap');
+$header-font: "Noto Sans";
+$button-font: "Open Sans";
+$body-text-font: "Fira Sans";
+// -----------------------
+
+@mixin shadow {
+   box-shadow: -5px 5px 10px $super-light-gray;
+}
+
+$break-small: 500px;
+$break-large: 900px;
+
+body {
+   font-family: $body-text-font;
+}

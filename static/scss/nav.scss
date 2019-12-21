@@ -1,0 +1,37 @@
+@import "all";
+
+.nav {
+   position: fixed;
+   top: 0;
+   left: 0;
+   right: 0;
+   height: 50px;
+   padding: 5px;
+   background-color: $tba-blue;
+   display: flex;
+   flex-flow: row wrap;
+   .nav-icon {
+      background-image: url("https://frcdesigns.files.wordpress.com/2017/06/android_launcher_icon_blue_512.png");
+      background-size: contain;
+      background-repeat: no-repeat;
+      height: 50px;
+      width: 50px;
+   }
+   .nav-option {
+      max-width: 100px;
+      padding: 10px;
+      border-radius: 2px;
+      text-align: center;
+      margin: auto 1vw auto 1vw;
+      background-color: $tba-blue;
+      color: $white;
+      transition: background-color .2s;
+      cursor: pointer;
+      &:hover {
+         background-color: $tba-dark-blue;
+      }
+   }
+   .nav-spacer {
+      flex-grow: 1;
+   }
+}
