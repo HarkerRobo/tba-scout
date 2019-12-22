@@ -1,7 +1,8 @@
-// This is just a read key, so feel free to steal if you want /shrug
-const TBA_AUTH_KEY ="gqzZstbSv3xodFnk8qAjX1ADDxcuz9HJogftSNsFyPgCfOHKYBuBiW4r1ImigRNA"
+// This is just a read key, so feel free to steal if you want.
+const TBA_AUTH_KEY = "gqzZstbSv3xodFnk8qAjX1ADDxcuz9HJogftSNsFyPgCfOHKYBuBiW4r1ImigRNA"
+const TBA_API_ROOT_URL = "https://www.thebluealliance.com/api/v3"
 
-function makeTBARequest(method, url, parameters, callback) {
+function makeTBARequest(url, parameters, callback) {
    let xhr = new XMLHttpRequest();
 
    xhr.onreadystatechange = () => {
@@ -13,18 +14,20 @@ function makeTBARequest(method, url, parameters, callback) {
          } else {
             responseText = xhr.response
          }
-         let response = { 
-            status: xhr.status, 
-            responseText 
-         };
-         callback(response)
+
+         callback({
+            status: xhr.status,
+            responseText
+         })
       }
    }
 
-   xhr.open(method, url, true);
+   xhr.open("GET", `${TBA_API_ROOT_URL}${url}`, true);
+
    if (typeof parameters !== "string") {
       parameters = JSON.stringify(parameters);
    }
-   xhr.setRequestHeader("Content-Type", "application/json");
+   xhr.setRequestHeader("X-TBA-Auth-Key", TBA_AUTH_KEY)
+
    xhr.send(parameters);
 }
