@@ -31,48 +31,76 @@ new Vue({
          console.log(JSON.parse(res.responseText))
       }.bind(this))
 
+      this.fetchingTeamsAndEvents = true;
+
+      const NUM_TEAM_PAGES = 17;
       let loadedTeamPages = 0;
-      for (let i = 0; i <= 16; i++) {
-         makeTBARequest(`/teams/${i}`, {}, function (res) {
+
+      let LAST_EVENT_YEAR = new Date().getFullYear();
+      let eventYear = 1992;
+
+      for (; loadedTeamPages < NUM_TEAM_PAGES; ++loadedTeamPages) {
+         let TEMP_loadedTeamPages = loadedTeamPages;
+         let TEMP_eventYear = eventYear;
+         makeTBARequest(`/teams/${loadedTeamPages}`, {}, function (res) {
             if (res.status == 200) {
-               loadedTeamPages++;
                let teams = JSON.parse(res.responseText);
-               for (let i = 0; i < teams.length; i++)
-                  this.allTeams.push(teams[i]);
+               for (let j = 0; j < teams.length; j++)
+                  this.allTeams.push({
+                     "key": teams[j].key,
+                     "number": teams[j].team_number,
+                     "name": teams[j].name
+                  });
                this.numTeams += teams.length;
-               if (loadedTeamPages==17) console.log(this.allTeams);
+               
+               if (TEMP_loadedTeamPages == NUM_TEAM_PAGES && TEMP_eventYear == LAST_EVENT_YEAR+1) {
+                  console.log("yuh1")
+               } else {
+                  console.log("not yet 1")
+               }
+            }
+         }.bind(this))
+      }
+      for (; eventYear <= LAST_EVENT_YEAR; eventYear++) {
+         let TEMP_loadedTeamPages = loadedTeamPages;
+         let TEMP_eventYear = eventYear;
+         makeTBARequest(`/events/${eventYear}`, {}, function (res) {
+            if (res.status == 200) {
+
+               let events = JSON.parse(res.responseText);
+               for (let j = 0; j < events.length; j++)
+                  this.allEvents.push({
+                     "key": events[j].key,
+                     "name": events[j].name,
+                     "type": events[j].event_type,
+                     "year": events[j].year
+                  });
+               this.numEvents += events.length;
+               if (TEMP_loadedTeamPages == NUM_TEAM_PAGES && TEMP_eventYear == LAST_EVENT_YEAR) {
+                  console.log("yuh2")
+                  console.log(TEMP_loadedTeamPages)
+                  console.log(TEMP_eventYear)
+                  
+               } else {
+                  console.log("not yet 2")
+                  console.log(TEMP_loadedTeamPages)
+                  console.log(TEMP_eventYear)
+               }
             }
          }.bind(this))
       }
 
-      
-
-
-      // fetch teams and events
-      // set values, set fetchingTeamsAndEvents to false
-
-      // filter events to remove duplicates?
+      this.fetchingTeamsAndEvents = false;
       this.clearSearchresultsTexts();
    },
    methods: {
-      linkTo: function (newLink, openInNewTab) {
-         if (openInNewTab) {
-            let link = document.createElement("a");
-            link.href = newLink;
-            link.target = "_blank";
-            document.getElementById("app").appendChild(link);
-            link.click();
-         } else {
-            window.location.href = newLink;
-         }
-      },
       toggleSearchResults: function (turnOn) {
          this.showSearchResults = turnOn;
       },
       search: function () { // filters teams/events according to search input
          this.showSearchresultsTexts("Loading...");
-         for (let i = 0; i < this.numTeams; i++) {
-
+         for (let i = 0; i < 10; i++) {
+            this.matchingTeams.push(this.allTeams[i])
          }
          for (let i = 0; i < this.numEvents; i++) {
 

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <title>tba-scout</title>
+
+   <link rel="preload" as="style" href="../static/css/nav.css" onload="this.rel='stylesheet'">
+   <link rel="preload" as="style" href="../static/css/data.css" onload="this.rel='stylesheet'">
+
+   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10"></script>
+   <script src="../static/js/utilities.js"></script>
+   <script src="../static/js/nav.js"></script>
+   <script src="../static/js/data.js" defer></script>
+</head>
+
+<body>
+   <div id="app">
+      <navbar></navbar>
+      <div class="content-container">
+         <div @click="linkTo('asdf', true)">asdf</div>
+      </div>
+   </div>
+
+</body>
+
+</html>

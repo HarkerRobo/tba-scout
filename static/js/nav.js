@@ -28,18 +28,5 @@ Vue.component('navbar',{
             Settings
          </span>
       </div>
-   `,
-   methods: {
-      linkTo: function(newLink, openInNewTab) {
-         if (openInNewTab) {
-            let link = document.createElement("a");
-            link.href = newLink;
-            link.target = "_blank";
-            document.getElementById("app").appendChild(link);
-            link.click();
-         } else {
-            window.location.href = newLink;
-         }
-      }
-   }
+   `
 });

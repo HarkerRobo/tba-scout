@@ -1,4 +1,13 @@
 @import url("https://fonts.googleapis.com/css?family=Fira+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Fira+Sans&display=swap");
+body {
+  font-family: "Fira Sans";
+}
+
+.content-container {
+  margin: 100px 10px 5vw 10px;
+}
+
 body {
   font-family: "Fira Sans";
 }
@@ -54,4 +63,4 @@ body {
       -ms-flex-positive: 1;
           flex-grow: 1;
 }
-/*# sourceMappingURL=nav.css.map */
+/*# sourceMappingURL=data.css.map */
