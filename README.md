@@ -15,3 +15,12 @@ TBA, but with some added features to help in scouting
    - get csvs of specified data scraped from tba
    - p customizable stuff
 - about page
+
+# todos
+- landing:
+   - fuzzy searching
+   - add tip about max number of results
+   - snackbar
+   - demo cards
+   - fix blur issue w/ search results
+   - for some reason there are duplicate team names?
