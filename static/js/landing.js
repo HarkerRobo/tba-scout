@@ -1,3 +1,8 @@
+// constants
+const MAX_SEARCH_RESULT_NUM = 15;
+const NUM_TEAM_PAGES = 17; // NEEDS UPDATING
+const LAST_EVENT_YEAR = new Date().getFullYear();
+
 new Vue({
    el: '#app',
    data: {
@@ -16,10 +21,12 @@ new Vue({
       showSearchResults: false,
       searchresultsText: {
          teams: {
+            headerTip: "",
             show: false,
             text: ""
          },
          events: {
+            headerTip: "",
             show: false,
             text: ""
          }
@@ -34,10 +41,9 @@ new Vue({
 
       this.fetchingTeamsAndEvents = true;
 
-      const NUM_TEAM_PAGES = 17;
+      
       let loadedTeamPages = 0;
 
-      const LAST_EVENT_YEAR = new Date().getFullYear();
       let eventYear = 1992;
       const NUM_EVENT_YEARS = LAST_EVENT_YEAR - eventYear + 1;
 
@@ -104,32 +110,65 @@ new Vue({
          this.matchingTeams = [];
          this.matchingEvents = [];
 
-         for (let i = 0; i < 10; i++) {
+         let moreTeamsThanAllowed = false;
+         let moreEventsThanAllowed = false;
+
+         for (let i = 0; i < this.numTeams; i++) {
             if (this.teamMatch(this.allTeams[i])) {
-               this.matchingTeams.push(this.allTeams[i])
-               console.log(this.matchingTeams.length)
+               
+               if (this.matchingTeams.length == MAX_SEARCH_RESULT_NUM) {
+                  moreTeamsThanAllowed = true;
+                  break;
+               } else {
+                  this.matchingTeams.push(this.allTeams[i]);
+               }
             }
          }
-         for (let i = 0; i < this.numEvents; i++) {
-            
+
+         let numTeamMatches = this.matchingTeams.length;
+         if (moreTeamsThanAllowed) {
+            this.searchresultsText.teams.headerTip = `Showing first ${numTeamMatches} result${numTeamMatches == 1 ? "" : "s"}`
+         } else {
+            this.searchresultsText.teams.headerTip = `${numTeamMatches} result${numTeamMatches == 1 ? "" : "s"}`
          }
+
+         for (let i = 0; i < this.numEvents; i++) {
+            if (this.eventMatch(this.allEvents[i])) {
+               if (this.matchingEvents.length == MAX_SEARCH_RESULT_NUM) {
+                  moreEventsThanAllowed = true;
+                  break;
+               } else {
+                  this.matchingEvents.push(this.allEvents[i]);
+               }
+            }
+         }
+         let numEventMatches = this.matchingEvents.length;
+         if (moreEventsThanAllowed) {
+            this.searchresultsText.events.headerTip = `Showing first ${numEventMatches} result${numEventMatches == 1 ? "" : "s"}`
+         } else {
+            this.searchresultsText.events.headerTip = `${numEventMatches} result${numEventMatches == 1 ? "" : "s"}`
+         }         
+
          this.clearSearchresultsTexts();
       },
       triggerSnackbar: function(isSuccess, text) {
          console.log(text);
+         // todo: snackbar triggers
       },
       clearSearch: function () {
          this.matchingTeams = [];
          this.matchingEvents = [];
       },
       teamMatch: function (team) {
+         // todo: fuzzy searching
          let regex = new RegExp(this.searchText)
          if (team["name"].match(regex)) return true
          if ((`frc${team["number"]}`).match(regex)) return true
          return false
       },
       eventMatch: function (event) {
-
+         // todo: fuzzy searching
+         return false
       },
       showSearchresultsTexts: function (text) {
          this.searchresultsText.teams.text = text;
