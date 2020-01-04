@@ -21,16 +21,28 @@
       <div class="content-container">
          <div class="search">
 
-            <input type="text" class="searchbar" placeholder="Start typing to search for a specific team or event" v-model="searchText" @click="toggleSearchResults(true)" @blur="toggleSearchResults(false)" @change="search">
+            <input type="text" class="searchbar" placeholder="Start typing to search for a specific team or event" v-model="searchText" @click="toggleSearchResults(true)" @blur="toggleSearchResults(false)" @input="search">
 
             <div class="searchresults" v-if="showSearchResults && searchText!=''">
+
                <div class="searchresultsHeader">
                   Teams
                </div>
                <div class="horizontalRule"></div>
-               <div class="searchresult searchresultTeam" v-for="team in matchingTeams">
-                  {{ team.name }}
+               <div class="searchresultsText" v-if="searchresultsText.teams.show">
+                  {{searchresultsText.teams.text}}
                </div>
+               <div v-else>
+                  <div class="searchresult searchresultTeam" v-for="team in matchingTeams">
+                     <span>
+                        frc{{ team["number"] }}&nbsp;-&nbsp;
+                     </span>
+                     <span>
+                        {{ team["name"] }}
+                     </span>
+                  </div>
+               </div>
+
                <div class="searchresultsHeader">
                   Events (3 results)
                </div>
@@ -38,7 +50,26 @@
                <div class="searchresultsText" v-if="searchresultsText.events.show">
                   {{searchresultsText.events.text}}
                </div>
+               <div v-else>
+                  <div class="searchresult searchresultEvent" v-for="event in matchingEvents">
+                     event
+                  </div>
+               </div>
+
             </div>
+         </div>
+         <div class="instructions" v-if="!showSearchResults || searchText==''">
+            <div class="instructions-header">
+               TBA-scout was created to offer some useful features for scouting. It was inspired by tba-at-a-glance, created by asdf on Github:
+            </div>
+            <br>
+            <div class="instructions-section">
+               <div class="instructions-text">
+                  A view of teams and their events and how they did at said events lorem ipsum. Also compare contrast idk. A view of teams and their events and how they did at said events lorem ipsum.
+               </div>
+               <img class="instructions-image" src="../static/img/test.jpg">
+            </div>
+            
          </div>
          
       </div>

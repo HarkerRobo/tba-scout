@@ -62,5 +62,34 @@
    input::placeholder {
       font-style: italic;
    }
+   .instructions {
+      margin: 4vw 5vw;
+      .instructions-header {
+         margin: 10px 5vw;
+      }
+      .instructions-section {
+         display: flex;
+         flex-flow: row wrap;
+         border-width: 1px;
+         border-style: solid;
+         border-color: $super-light-gray;
+         box-shadow: 0 2px 10px $light-gray;
+         margin: 10px 5vw;
+         .instructions-text {
+            flex: 1 1 30%;
+            min-width: 200px;
+            margin: 50px;
+            margin-right: 30px;
+            font-size: 1.5vw;
+            line-height: 130%;
+         }
+         .instructions-image {
+            flex: 1 1 55%;
+            min-width: 200px;
+            margin: 20px;
+            margin-left: 10px;
+         }
+      }
+   }
 }
 

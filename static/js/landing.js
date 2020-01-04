@@ -27,6 +27,7 @@ new Vue({
    },
    created: function () {
       this.showSearchresultsTexts("Loading...");
+
       makeTBARequest("/status", {}, function (res) {
          console.log(JSON.parse(res.responseText))
       }.bind(this))
@@ -36,14 +37,17 @@ new Vue({
       const NUM_TEAM_PAGES = 17;
       let loadedTeamPages = 0;
 
-      let LAST_EVENT_YEAR = new Date().getFullYear();
+      const LAST_EVENT_YEAR = new Date().getFullYear();
       let eventYear = 1992;
+      const NUM_EVENT_YEARS = LAST_EVENT_YEAR - eventYear + 1;
+
+      let loaded_teams = 0;
+      let loaded_events = 0;
 
       for (; loadedTeamPages < NUM_TEAM_PAGES; ++loadedTeamPages) {
-         let TEMP_loadedTeamPages = loadedTeamPages;
-         let TEMP_eventYear = eventYear;
          makeTBARequest(`/teams/${loadedTeamPages}`, {}, function (res) {
             if (res.status == 200) {
+               loaded_teams++;
                let teams = JSON.parse(res.responseText);
                for (let j = 0; j < teams.length; j++)
                   this.allTeams.push({
@@ -53,20 +57,21 @@ new Vue({
                   });
                this.numTeams += teams.length;
                
-               if (TEMP_loadedTeamPages == NUM_TEAM_PAGES && TEMP_eventYear == LAST_EVENT_YEAR+1) {
-                  console.log("yuh1")
-               } else {
-                  console.log("not yet 1")
+               if (loaded_teams == NUM_TEAM_PAGES && loaded_events == NUM_EVENT_YEARS) {
+                  this.fetchingTeamsAndEvents = false;
+                  this.clearSearchresultsTexts();
+                  this.triggerSnackbar(true, "Teams and events successfully loaded.")
                }
+            } else {
+               this.triggerSnackbar(false, "Error retrieving teams and events, please try again.")
             }
          }.bind(this))
       }
+
       for (; eventYear <= LAST_EVENT_YEAR; eventYear++) {
-         let TEMP_loadedTeamPages = loadedTeamPages;
-         let TEMP_eventYear = eventYear;
          makeTBARequest(`/events/${eventYear}`, {}, function (res) {
             if (res.status == 200) {
-
+               loaded_events++;
                let events = JSON.parse(res.responseText);
                for (let j = 0; j < events.length; j++)
                   this.allEvents.push({
@@ -76,45 +81,54 @@ new Vue({
                      "year": events[j].year
                   });
                this.numEvents += events.length;
-               if (TEMP_loadedTeamPages == NUM_TEAM_PAGES && TEMP_eventYear == LAST_EVENT_YEAR) {
-                  console.log("yuh2")
-                  console.log(TEMP_loadedTeamPages)
-                  console.log(TEMP_eventYear)
-                  
-               } else {
-                  console.log("not yet 2")
-                  console.log(TEMP_loadedTeamPages)
-                  console.log(TEMP_eventYear)
+               if (loaded_teams == NUM_TEAM_PAGES && loaded_events == NUM_EVENT_YEARS) {
+                  this.fetchingTeamsAndEvents = false;
+                  this.clearSearchresultsTexts();
+                  this.triggerSnackbar(true, "Teams and events successfully loaded.")              
                }
+            } else {
+               this.triggerSnackbar(false, "Error retrieving teams and events, please try again.")
             }
          }.bind(this))
       }
-
-      this.fetchingTeamsAndEvents = false;
-      this.clearSearchresultsTexts();
    },
    methods: {
       toggleSearchResults: function (turnOn) {
          this.showSearchResults = turnOn;
       },
       search: function () { // filters teams/events according to search input
-         this.showSearchresultsTexts("Loading...");
+         if (this.fetchingTeamsAndEvents) return;
+
+         this.showSearchresultsTexts("Loading results...");
+
+         this.matchingTeams = [];
+         this.matchingEvents = [];
+
          for (let i = 0; i < 10; i++) {
-            this.matchingTeams.push(this.allTeams[i])
+            if (this.teamMatch(this.allTeams[i])) {
+               this.matchingTeams.push(this.allTeams[i])
+               console.log(this.matchingTeams.length)
+            }
          }
          for (let i = 0; i < this.numEvents; i++) {
-
+            
          }
          this.clearSearchresultsTexts();
+      },
+      triggerSnackbar: function(isSuccess, text) {
+         console.log(text);
       },
       clearSearch: function () {
          this.matchingTeams = [];
          this.matchingEvents = [];
       },
-      teamMatch: function (teamName, teamNumber) {
-
+      teamMatch: function (team) {
+         let regex = new RegExp(this.searchText)
+         if (team["name"].match(regex)) return true
+         if ((`frc${team["number"]}`).match(regex)) return true
+         return false
       },
-      eventMatch: function (eventName, eventID) {
+      eventMatch: function (event) {
 
       },
       showSearchresultsTexts: function (text) {
